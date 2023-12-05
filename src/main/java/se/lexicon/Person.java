@@ -54,7 +54,7 @@ public class Person {
     }
 
     public String getSummary() {
-        return "Person{ Id:" + id + ", Name:" + firstName + " " + lastName + ",Email:" + email + "}";
+        return "Person{ Id:" + id + ", \nName:" + firstName + " " + lastName + "\nEmail:" + email + "}";
     }
 
 }

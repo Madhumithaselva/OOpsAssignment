@@ -74,14 +74,15 @@ public ToDoItem(int id,String title,String taskDescription,LocalDate deadline,Pe
     public String getSummary() {
         LocalDate currentDate = LocalDate.now();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Id{ ");
+        stringBuilder.append("Id{ ").append(id);
         stringBuilder.append(", Title:").append(title);
         stringBuilder.append(", Description:").append(taskDescription);
         stringBuilder.append(", Deadline:").append(deadline);
-        if (currentDate.isAfter(deadline)) {
-            stringBuilder.append("Creator Info:").append(creator.getSummary());
+        if (currentDate.isBefore(deadline)) {
+            stringBuilder.append("\nTodo Item is overdue");
         } else {
-            stringBuilder.append("Todo Item is overdue");
+            stringBuilder.append("Creator Info:").append(creator.getSummary());
+
         }
         stringBuilder.append("}");
         return stringBuilder.toString();

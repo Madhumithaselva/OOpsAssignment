@@ -9,6 +9,7 @@ public class Main {
         ToDoItem item=new ToDoItem(4,"Change tires","Change the tyres",todayDate,nisse);
         item.setCreator(nisse);
         System.out.println(item.getSummary());
-        //System.out.println();
+        TodoItemTask itemTask=new TodoItemTask(4,item,nisse);
+        System.out.println(itemTask.getSummary());
     }
 }
