@@ -1,4 +1,6 @@
 package se.lexicon;
+import java.lang.String;
+import java.util.Objects;
 
 public class TodoItemTask {
     private int id;
@@ -43,7 +45,36 @@ public class TodoItemTask {
         this.assignee = assignee;
     }
 
-    public String getSummary(){
+    //Override toString() method except person object
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "TodoItemTask{" +
+                "id=" + id +
+                ", assigned=" + assigned +
+                ", toDoItem=" + toDoItem +
+                '}';
+    }
+
+    //Override equals() method except Person object
+
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        if (!super.equals(object)) return false;
+        TodoItemTask itemTask = (TodoItemTask) object;
+        return id == itemTask.id && assigned == itemTask.assigned && java.util.Objects.equals(toDoItem, itemTask.toDoItem);
+    }
+
+    //Override hashCode() method except Person object
+    public int hashCode() {
+        return java.util.Objects.hash(super.hashCode(), id, assigned, toDoItem);
+    }
+
+
+
+
+    /*public String getSummary(){
        StringBuilder stringBuilder = new StringBuilder();
        stringBuilder.append("\n==============================\n");
        stringBuilder.append("Assignee Information");
@@ -60,6 +91,6 @@ public class TodoItemTask {
        }
        stringBuilder.append("}");
        return stringBuilder.toString();
-    }
+    }*/
 }
 

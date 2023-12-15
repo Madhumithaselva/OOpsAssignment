@@ -71,7 +71,36 @@ public ToDoItem(int id,String title,String taskDescription,LocalDate deadline,Pe
          done=!done && currentDate.isBefore(deadline);
          return done;
     }
-    public String getSummary() {
+
+    //Override toString() method except Person object
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "ToDoItem{" +
+                "id=" + id +
+                ", title=" + title +
+                ", taskDescription=" + taskDescription +
+                ", deadline=" + deadline +
+                ", done=" + done +
+                '}';
+    }
+
+    //Override equals() method except Person object
+
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        if (!super.equals(object)) return false;
+        ToDoItem item = (ToDoItem) object;
+        return id == item.id && done == item.done && java.util.Objects.equals(title, item.title) && java.util.Objects.equals(taskDescription, item.taskDescription) && java.util.Objects.equals(deadline, item.deadline);
+    }
+
+    //Override hashCode() method except Person object
+    public int hashCode() {
+        return java.util.Objects.hash(super.hashCode(), id, title, taskDescription, deadline, done);
+    }
+
+/* public String getSummary() {
         LocalDate currentDate = LocalDate.now();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Id{ ").append(id);
@@ -86,7 +115,7 @@ public ToDoItem(int id,String title,String taskDescription,LocalDate deadline,Pe
         }
         stringBuilder.append("}");
         return stringBuilder.toString();
-    }
+    }*/
 
     }
 
