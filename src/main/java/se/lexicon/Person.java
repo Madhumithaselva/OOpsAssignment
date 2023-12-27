@@ -1,5 +1,8 @@
 package se.lexicon;
+import java.lang.*;
+import java.util.*;
 import java.util.Objects;
+import java.lang.Throwable;
 
 public class Person {
     private int id;
@@ -73,7 +76,7 @@ public class Person {
                 '}';
     }
 
-    //Ovrride hashCode() method
+    //Override hashCode() method
     public int hashCode() {
         return java.util.Objects.hash(super.hashCode(), id, firstName, lastName, email, hashCode);
     }
