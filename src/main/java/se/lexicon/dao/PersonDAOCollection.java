@@ -2,6 +2,7 @@ package se.lexicon.dao;
 
 import se.lexicon.AppUser;
 import se.lexicon.Person;
+import se.lexicon.ToDoItem;
 import se.lexicon.sequencers.PersonIdSequencer;
 
 import java.util.*;
@@ -41,8 +42,15 @@ public class PersonDAOCollection implements PersonDAO {
     public Collection<Person> findAll(){
         return Collections.unmodifiableCollection(person1);
     }
-    public boolean removePerson(Person p){
-        return person1.remove(p);
+
+    public void remove(int id){
+        Iterator<Person> iterator = person1.iterator();
+        while(iterator.hasNext()){
+            Person person = iterator.next();
+            if(person.getId() ==id){
+                iterator.remove();
+            }
+        }
     }
 
 }

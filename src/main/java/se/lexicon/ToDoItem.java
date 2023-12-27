@@ -1,6 +1,7 @@
 package se.lexicon;
 
 import java.time.LocalDate;
+import java.util.*;
 
 public class ToDoItem {
 private int id;

@@ -1,6 +1,6 @@
 package se.lexicon;
-import java.util.Objects;
-import java.util.object;
+
+import java.util.*;
 
 public class AppUser {
     private String username;
@@ -75,7 +75,7 @@ public class AppUser {
         }
         if (!super.equals(object)) return false;
         AppUser appUser = (AppUser) object;
-        return equals == appUser.equals && java.util.Objects.equals(username, appUser.username) && role == appUser.role;
+        return this.equals == appUser.equals && java.util.Objects.equals(username, appUser.username) && role == appUser.role;
     }
 
 }

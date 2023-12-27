@@ -2,6 +2,7 @@ package se.lexicon.dao;
 
 import se.lexicon.AppRole;
 import se.lexicon.AppUser;
+import se.lexicon.Person;
 import se.lexicon.sequencers.PersonIdSequencer;
 
 import java.util.*;
@@ -36,7 +37,13 @@ public class AppUserDAOCollection implements AppUserDAO {
         return Collections.unmodifiableCollection(users);
     }
 
-    public boolean removeUser(AppUser user){
-         return users.remove(user);
+    public void remove(String username){
+        Iterator<AppUser> iterator = users.iterator();
+        while(iterator.hasNext()){
+            AppUser user = iterator.next();
+            if(user.getUsername().equals(username)){
+                iterator.remove();
+            }
+        }
     }
 }

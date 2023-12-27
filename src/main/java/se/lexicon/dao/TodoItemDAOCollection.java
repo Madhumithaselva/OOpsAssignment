@@ -2,6 +2,7 @@ package se.lexicon.dao;
 
 import se.lexicon.Person;
 import se.lexicon.ToDoItem;
+import se.lexicon.TodoItemTask;
 import se.lexicon.sequencers.TodoItemIdSequencer;
 
 import java.util.*;
@@ -83,7 +84,13 @@ public class TodoItemDAOCollection implements TodoItemDAO{
         }
         return itemsByDeadlineAfter;
     }
-    public boolean removeItem(ToDoItem item){
-        return items.remove(item);
+    public void remove(int id){
+        Iterator<ToDoItem> iterator = items.iterator();
+        while(iterator.hasNext()){
+            ToDoItem doItem = iterator.next();
+            if(doItem.getId() ==id){
+                iterator.remove();
+            }
+        }
     }
 }
