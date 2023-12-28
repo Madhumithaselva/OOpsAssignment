@@ -11,7 +11,7 @@ public interface TodoItemDAO {
     ToDoItem persist(ToDoItem toDoItem);
     ToDoItem findById(int id);
     Collection<ToDoItem> findAll();
-    Collection<ToDoItem> findByDoneStatus(boolean done);
+    Collection<ToDoItem> findAllByDoneStatus(boolean done);
     Collection<ToDoItem> findByTitleContains(String title);
     Collection<ToDoItem> findByPersonId(int personId);
     Collection<ToDoItem> findByDeadlineBefore(LocalDate end);

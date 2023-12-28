@@ -76,18 +76,15 @@ public class Person {
                 '}';
     }
 
-    //Override hashCode() method
-    public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), id, firstName, lastName, email, hashCode);
-    }
-
-//Override equals() method
     public boolean equals(Object object) {
         if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
+        if (!(object instanceof Person person)) return false;
         if (!super.equals(object)) return false;
-        Person person = (Person) object;
-        return id == person.id && hashCode == person.hashCode && java.util.Objects.equals(firstName, person.firstName) && java.util.Objects.equals(lastName, person.lastName) && java.util.Objects.equals(email, person.email);
+        return id == person.id && java.util.Objects.equals(firstName, person.firstName) && java.util.Objects.equals(lastName, person.lastName) && java.util.Objects.equals(email, person.email);
+    }
+
+    public int hashCode() {
+        return java.util.Objects.hash(super.hashCode(), id, firstName, lastName, email);
     }
 
 

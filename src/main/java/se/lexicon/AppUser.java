@@ -59,23 +59,15 @@ public class AppUser {
                 "username:" + username + "\n"+
                 "Role: "+role+" }";
     }
-   public int hashCode(){
-        int result=17;
-        result=31*result+username.hashCode();
-        result=31*result+role.hashCode();
-        return result;
-   }
 
     public boolean equals(Object object) {
-        if (this == object){
-            return true;
-        }
-        if (object == null || getClass() != object.getClass()){
-            return false;
-        }
+        if (this == object) return true;
+        if (!(object instanceof AppUser appUser)) return false;
         if (!super.equals(object)) return false;
-        AppUser appUser = (AppUser) object;
-        return this.equals == appUser.equals && java.util.Objects.equals(username, appUser.username) && role == appUser.role;
+        return java.util.Objects.equals(username, appUser.username) && role == appUser.role;
     }
 
+    public int hashCode() {
+        return java.util.Objects.hash(super.hashCode(), username, role);
+    }
 }

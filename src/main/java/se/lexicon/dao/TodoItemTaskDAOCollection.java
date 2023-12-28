@@ -8,7 +8,7 @@ import se.lexicon.sequencers.TodoItemIdSequencer;
 import java.util.*;
 import java.util.Iterator;
 
-public class TodoItemTaskDAOCollection {
+public class TodoItemTaskDAOCollection implements TodoItemTaskDAO {
     private Collection<TodoItemTask> tasks;
 
     public TodoItemTaskDAOCollection(Collection<TodoItemTask> tasks) {
@@ -16,7 +16,6 @@ public class TodoItemTaskDAOCollection {
     }
 
     public TodoItemTask persist(TodoItemTask todoItemTask){
-
        tasks.add(todoItemTask);
        return todoItemTask;
 
@@ -26,8 +25,8 @@ public class TodoItemTaskDAOCollection {
             if (itemTask.getId() == id) {
                 return itemTask;
             }
-            return null;
         }
+            return null;
     }
 
     public Collection<TodoItemTask> findAll(){
