@@ -1,5 +1,7 @@
 package se.lexicon;
 
+import se.lexicon.sequencers.TodoItemIdSequencer;
+
 import java.lang.String;
 import java.util.*;
 
@@ -10,7 +12,7 @@ public class TodoItemTask {
     private Person assignee;
 
     public TodoItemTask(int id,ToDoItem toDoItem,Person assignee){
-        this.id=id;
+        this.id= TodoItemIdSequencer.getCurrentId();
         setToDoItem(toDoItem);
         setAssignee(assignee);
     }

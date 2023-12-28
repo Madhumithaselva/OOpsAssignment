@@ -5,9 +5,9 @@ import java.util.*;
 
 
 public interface AppUserDAO {
-    AppUser persist(String username, String password, AppRole role);
+    AppUser persist(AppUser appUser);
     AppUser findByUsername(String username);
     Collection<AppUser> findAll();
-    boolean removeUser(AppUser appUser);
+    void remove(String username);
 
 }

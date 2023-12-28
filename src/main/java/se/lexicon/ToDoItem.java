@@ -1,7 +1,10 @@
 package se.lexicon;
 
+import se.lexicon.sequencers.TodoItemIdSequencer;
+
 import java.time.LocalDate;
 import java.util.*;
+import java.lang.String;
 
 public class ToDoItem {
 private int id;
@@ -12,7 +15,7 @@ private boolean done;
 private Person creator;
 
 public ToDoItem(int id,String title,String taskDescription,LocalDate deadline,Person creator){
-    this.id=id;
+    this.id= TodoItemIdSequencer.getCurrentId();
     setTitle(title);
     setTaskDescription(taskDescription);
     setDeadLine(deadline);

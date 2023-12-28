@@ -15,10 +15,10 @@ public class PersonDAOCollection implements PersonDAO {
         this.person1 = person1;
     }
 
-    public Person persist(String firstName, String lastName, String email, AppUser credentials){
+    public Person persist(Person person){
 
-        Person newPerson = new Person(PersonIdSequencer.nextId(),firstName,lastName,email,credentials);
-        return person1.add(newPerson)?newPerson:null;
+        person1.add(person);
+        return person;
     }
 
     public Person findById(int id){
@@ -44,6 +44,13 @@ public class PersonDAOCollection implements PersonDAO {
     }
 
     public void remove(int id){
+        Person removePerson = findById(id);
+        if (removePerson == null){
+            System.out.println("No Person to remove");
+        }
+        person1.remove(removePerson);
+    }
+   /* public void remove(int id){
         Iterator<Person> iterator = person1.iterator();
         while(iterator.hasNext()){
             Person person = iterator.next();
@@ -51,6 +58,6 @@ public class PersonDAOCollection implements PersonDAO {
                 iterator.remove();
             }
         }
-    }
+    }*/
 
 }

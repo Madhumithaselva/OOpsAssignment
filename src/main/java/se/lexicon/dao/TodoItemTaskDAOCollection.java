@@ -15,31 +15,37 @@ public class TodoItemTaskDAOCollection {
         this.tasks = tasks;
     }
 
-    public TodoItemTask persist(boolean assignValue, ToDoItem item, Person p1){
-        TodoItemTask newTask = new TodoItemTask(TodoItemIdSequencer.getCurrentId(),item,p1);
-        return tasks.add(newTask)?newTask:null;
+    public TodoItemTask persist(TodoItemTask todoItemTask){
+
+       tasks.add(todoItemTask);
+       return todoItemTask;
+
     }
-    public TodoItemTask findById(int id){
-        for (TodoItemTask itemTask: tasks) {
+    public TodoItemTask findById(int id) {
+        for (TodoItemTask itemTask : tasks) {
             if (itemTask.getId() == id) {
                 return itemTask;
             }
+            return null;
         }
-        return null;
     }
+
     public Collection<TodoItemTask> findAll(){
         return Collections.unmodifiableCollection(tasks);
     }
+
     public Collection<TodoItemTask> findByAssignedStatus(boolean done){
+
         Set<TodoItemTask> taskByStatus = new HashSet<>();
 
         for (TodoItemTask t : tasks){
-            if (t.isAssigned() ==true){
+            if (t.isAssigned()){
                 taskByStatus.add(t);
             }
         }
         return taskByStatus;
     }
+
     public Collection<TodoItemTask> findByPersonId(int personId){
         Set<TodoItemTask> tasksByPersonId = new HashSet<>();
 
@@ -50,7 +56,16 @@ public class TodoItemTaskDAOCollection {
         }
         return tasksByPersonId;
     }
-    public void remove(int id){
+
+    public void remove(int id) {
+        TodoItemTask removeTask = findById(id);
+        if(removeTask == null){
+            System.out.println("No Item Task to remove");
+        }
+        tasks.remove(removeTask);
+    }
+
+   /* public void remove(int id){
         Iterator<TodoItemTask> iterator = tasks.iterator();
         while(iterator.hasNext()){
             TodoItemTask task = iteator.next();
@@ -58,5 +73,5 @@ public class TodoItemTaskDAOCollection {
                 iterator.remove();
                 }
         }
-    }
+    }*/
 }

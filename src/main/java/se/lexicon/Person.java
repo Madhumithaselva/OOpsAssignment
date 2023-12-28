@@ -1,4 +1,6 @@
 package se.lexicon;
+import se.lexicon.sequencers.PersonIdSequencer;
+
 import java.lang.*;
 import java.util.*;
 import java.util.Objects;
@@ -21,7 +23,7 @@ public class Person {
 
     public Person(int id, String firstName, String lastName, String email) {
 
-        setId(id);
+        id= PersonIdSequencer.getCurrentId();
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
@@ -35,16 +37,14 @@ public class Person {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        if (firstName == null) throw new IllegalArgumentException("First Name was null");
+        if (firstName == null) {
+            throw new IllegalArgumentException("First Name was null");
+        }
         this.firstName = firstName;
     }
 

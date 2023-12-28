@@ -8,7 +8,7 @@ import java.util.*;
 import java.time.LocalDate;
 
 public interface TodoItemDAO {
-    ToDoItem persist(String title, String taskDescription, LocalDate deadline, boolean done, Person creator);
+    ToDoItem persist(ToDoItem toDoItem);
     ToDoItem findById(int id);
     Collection<ToDoItem> findAll();
     Collection<ToDoItem> findByDoneStatus(boolean done);
@@ -16,5 +16,5 @@ public interface TodoItemDAO {
     Collection<ToDoItem> findByPersonId(int personId);
     Collection<ToDoItem> findByDeadlineBefore(LocalDate end);
     Collection<ToDoItem> findByDeadlineAfter(LocalDate start);
-    boolean remove(ToDoItem toDoItem);
+    void remove(int id);
 }
