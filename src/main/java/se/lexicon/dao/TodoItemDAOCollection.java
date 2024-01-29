@@ -16,12 +16,16 @@ public class TodoItemDAOCollection implements TodoItemDAO {
         this.items = items;
     }
 
-    public ToDoItem persist(ToDoItem toDoItem) {
-
-        items.add(toDoItem);
-        return toDoItem;
+    @Override
+    public ToDoItem create(ToDoItem toDoItem) {
+        return null;
     }
+    @Override
+    public Collection<ToDoItem> findAll() {
 
+        return Collections.unmodifiableCollection(items);
+    }
+    @Override
     public ToDoItem findById(int id) {
         for (ToDoItem item : items) {
             if (item.getId() == id) {
@@ -31,79 +35,38 @@ public class TodoItemDAOCollection implements TodoItemDAO {
         return null;
     }
 
-    public Collection<ToDoItem> findAll() {
-        return Collections.unmodifiableCollection(items);
+    @Override
+    public Collection<ToDoItem> findByDoneStatus(boolean done) {
+        return null;
     }
 
-    public Collection<ToDoItem> findAllByDoneStatus(boolean done) {
-        Set<ToDoItem> itemsByStatus = new HashSet<>();
-
-        for (ToDoItem i : items) {
-            if (i.isDone() == true) {
-                itemsByStatus.add(i);
-            }
-        }
-        return itemsByStatus;
+    @Override
+    public Collection<ToDoItem> findByAssignee(int id) {
+        return null;
     }
 
-    public Collection<ToDoItem> findByTitleContains(String title) {
-        Set<ToDoItem> itemsByTitle = new HashSet<>();
-
-        for (ToDoItem i : items) {
-            if (title.equals(i.getTitle())) {
-                itemsByTitle.add(i);
-            }
-        }
-        return itemsByTitle;
+    @Override
+    public Collection<ToDoItem> findByAssignee(Person person) {
+        return null;
     }
 
-    public Collection<ToDoItem> findByPersonId(int personId) {
-        Set<ToDoItem> itemsByPersonId = new HashSet<>();
-
-        for (ToDoItem i : items) {
-            if (i.getId() == personId) {
-                itemsByPersonId.add(i);
-            }
-        }
-        return itemsByPersonId;
+    @Override
+    public Collection<ToDoItem> findByUnassignedTodoItems() {
+        return null;
     }
 
-    public Collection<ToDoItem> findByDeadlineBefore(LocalDate Date) {
-        Set<ToDoItem> itemsByDeadlineBefore = new HashSet<>();
-
-        for (ToDoItem i : items) {
-            if (i.getDeadLine().isBefore(Date)) {
-                itemsByDeadlineBefore.add(i);
-            }
-        }
-        return itemsByDeadlineBefore;
+    @Override
+    public Collection<ToDoItem> update(ToDoItem toDoItem) {
+        return null;
     }
 
-    public Collection<ToDoItem> findByDeadlineAfter(LocalDate Date) {
-        Set<ToDoItem> itemsByDeadlineAfter = new HashSet<>();
-
-        for (ToDoItem i : items) {
-            if (i.getDeadLine().isAfter(Date)) {
-                itemsByDeadlineAfter.add(i);
-            }
-        }
-        return itemsByDeadlineAfter;
+    @Override
+    public boolean deleteById(int id) {
+        return false;
     }
 
-    public void remove(int id) {
-      ToDoItem removeItem = findById(id);
-        if(removeItem ==null){
-            System.out.println("No Item to remove");
-        }
-        items.remove(removeItem);
-    }
-    /*public void remove(int id){
-        Iterator<ToDoItem> iterator = items.iterator();
-        while(iterator.hasNext()){
-            ToDoItem doItem = iterator.next();
-            if(doItem.getId() ==id){
-                iterator.remove();
-            }
-        }
-    }*/
+
+
+
+
 }
