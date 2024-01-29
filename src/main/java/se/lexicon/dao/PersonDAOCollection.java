@@ -55,7 +55,7 @@ public class PersonDAOCollection implements PersonDAO {
         try(
                 Connection connection = MySQLConnection.getConnection();
                 Statement statement = connection.createStatement();
-                Resultset resultset = statement.executeQuery("sELECT * FROM peron");
+                Resultset resultset = statement.executeQuery("SELECT * FROM person");
                 ){
             while(resultset.next()){
                 int personId= resultset.getInt("person_id");
@@ -120,11 +120,48 @@ public class PersonDAOCollection implements PersonDAO {
     }
     @Override
     public Person update(Person person) {
-        return null;
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE person SET first_name=?,last_name=? WHERE person_id=?");
+        ){
+            preparedStatement.setInt(1, person.getId());
+            preparedStatement.setString(2, person.getFirstName());
+            preparedStatement.setString(3, person.getLastName());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Person with ID " + person.getPersonId() + " updated successfully.");
+                return person;
+            } else {
+                System.out.println("No person found with ID " + person.getPersonId() + " to update.");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean deleteById(int id) {
-        return false;
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM person WHERE person_id=?");
+        ){
+            preparedStatement.setInt(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Person with ID " + id + " deleted successfully.");
+                return true;
+            } else {
+                System.out.println("No person found with ID " + id + " to delete.");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
