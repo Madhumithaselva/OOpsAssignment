@@ -22,7 +22,7 @@ public class PersonDAOCollection implements PersonDAO {
 
         try(
                 Connection connection= MySQLConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(insertQuery,Preparedstatement.RETURN_GENERATED_KEYS);
+                PreparedStatement preparedStatement = connection.prepareStatement(insertQuery,PreparedStatement.RETURN_GENERATED_KEYS);
             ){
             preparedStatement.setString(1,person.getFirstName());
             preparedStatement.setString(2,person.getLastName());
