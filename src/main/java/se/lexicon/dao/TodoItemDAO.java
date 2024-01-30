@@ -3,7 +3,6 @@ import se.lexicon.Person;
 import se.lexicon.ToDoItem;
 
 
-import java.lang.*;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -15,6 +14,6 @@ public interface TodoItemDAO {
     Collection<ToDoItem> findByAssignee(int id);
     Collection<ToDoItem> findByAssignee(Person person);
     Collection<ToDoItem> findByUnassignedTodoItems();
-    Collection<ToDoItem> update(ToDoItem toDoItem);
+    ToDoItem update(ToDoItem toDoItem);
     boolean deleteById(int id);
 }

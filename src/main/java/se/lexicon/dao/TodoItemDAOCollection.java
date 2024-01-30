@@ -136,28 +136,134 @@ public class TodoItemDAOCollection implements TodoItemDAO {
 
     @Override
     public Collection<ToDoItem> findByAssignee(int id) {
-        return null;
+        List<ToDoItem> items = new ArrayList<>();
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM todo_item WHERE assignee_id=?");
+        ){
+            preparedStatement.setInt(1,id);
+            try(ResultSet resultSet = preparedStatement.executeQuery();){
+
+                while (resultSet.next()) {
+                    int itemId = resultSet.getInt("todo_id");
+                    String title = resultSet.getString("title");
+                    String description = resultSet.getString("description");
+                    LocalDate deadline = resultSet.getObject("deadline",LocalDate.class);
+                    boolean status = resultSet.getBoolean("done");
+                    int assigneeId = resultSet.getInt("assignee_id");
+
+                    ToDoItem toDoItem = new ToDoItem(itemId, title, description, deadline, status, assigneeId);
+                    items.add(toDoItem);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return items;
     }
 
     @Override
     public Collection<ToDoItem> findByAssignee(Person person) {
-        return null;
+        List<ToDoItem> items = new ArrayList<>();
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM todo_item WHERE assignee_id=?");
+        ){
+            preparedStatement.setInt(1,person.getId());
+            try(ResultSet resultSet = preparedStatement.executeQuery();){
+
+                while (resultSet.next()) {
+                    int itemId = resultSet.getInt("todo_id");
+                    String title = resultSet.getString("title");
+                    String description = resultSet.getString("description");
+                    LocalDate deadline = resultSet.getObject("deadline",LocalDate.class);
+                    boolean status = resultSet.getBoolean("done");
+                    int assigneeId = resultSet.getInt("assignee_id");
+
+                    ToDoItem toDoItem = new ToDoItem(itemId, title, description, deadline, status, assigneeId);
+                    items.add(toDoItem);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return items;
     }
 
     @Override
     public Collection<ToDoItem> findByUnassignedTodoItems() {
-        return null;
+        List<ToDoItem> items = new ArrayList<>();
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM todo_item WHERE assignee_id IS NULL");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                ){
+                while (resultSet.next()) {
+                    int itemId = resultSet.getInt("todo_id");
+                    String title = resultSet.getString("title");
+                    String description = resultSet.getString("description");
+                    LocalDate deadline = resultSet.getObject("deadline",LocalDate.class);
+                    boolean status = resultSet.getBoolean("done");
+                    int assigneeId = resultSet.getInt("assignee_id");
+
+                    ToDoItem toDoItem = new ToDoItem(itemId, title, description, deadline, status, assigneeId);
+                    items.add(toDoItem);
+                }
+            }catch (SQLException e){
+                 e.printStackTrace();
+            }
+        return items;
     }
 
     @Override
-    public Collection<ToDoItem> update(ToDoItem toDoItem) {
-        return null;
+    public ToDoItem update(ToDoItem toDoItem) {
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE todo_item SET title=?,description=?,deadline=?,done=?,assignee_id=? WHERE todo_id=?");
+        ){
+            preparedStatement.setString(1,toDoItem.getTitle());
+            preparedStatement.setString(2,toDoItem.getTaskDescription());
+            preparedStatement.setObject(3,toDoItem.getDeadLine());
+            preparedStatement.setBoolean(4,toDoItem.isDone());
+            preparedStatement.setInt(5,toDoItem.getCreator());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Item with ID " + toDoItem.getId() + " updated successfully.");
+                return toDoItem;
+            } else {
+                System.out.println("No item found with ID " + toDoItem.getId() + " to update.");
+                return toDoItem;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean deleteById(int id) {
-        return false;
-    }
+        try(
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM todo_item WHERE todo_id=?");
+        ){
+            preparedStatement.setInt(1, id);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Item with ID " + id + " deleted successfully.");
+                return true;
+            } else {
+                System.out.println("No item found with ID " + id + " to delete.");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+      }
+}
 
 
 
