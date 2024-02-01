@@ -1,9 +1,8 @@
 package se.lexicon.dao;
 
-import com.mysql.cj.jdbc.ConnectionGroup;
-import com.mysql.cj.protocol.Resultset;
 import se.lexicon.Person;
 import se.lexicon.db.MySQLConnection;
+import java.sql.*;
 
 import java.util.*;
 import java.lang.*;
@@ -33,7 +32,7 @@ public class PersonDAOCollection implements PersonDAO {
                 System.out.println("Person created successfully");
             }
 
-            try(Resultset generatedKeys= preparedStatement.getGeneratedKeys()){
+            try(ResultSet generatedKeys= preparedStatement.getGeneratedKeys()){
                 if (generatedKeys.next()){
                     int generatedPersonId = generatedKeys.getInt(1);
                     person.setId(generatedPersonId);
@@ -41,38 +40,38 @@ public class PersonDAOCollection implements PersonDAO {
                 }else {
                     System.out.println("No keys were generated");
                 }
-            }catch (SQLException e){
-                e.printStackTrace();
             }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return person;
     }
     @Override
     public Collection<Person> findAll(){
 
-        List<Person> persons = new ArrayList<>();
-
         try(
                 Connection connection = MySQLConnection.getConnection();
                 Statement statement = connection.createStatement();
-                Resultset resultset = statement.executeQuery("SELECT * FROM person");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM person");
                 ){
-            while(resultset.next()){
-                int personId= resultset.getInt("person_id");
+            while(resultSet.next()){
+                int personId= resultSet.getInt("person_id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
 
                 Person person = new Person(personId,firstName,lastName);
-                persons.add(person);
+                person1.add(person);
+
             }
+
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return persons;
+        return person1;
     }
 
     @Override
-    Person findById(int id){
+    public Person findById(int id){
         Person person = null;
         try(
                 Connection connection = MySQLConnection.getConnection();
@@ -96,7 +95,7 @@ public class PersonDAOCollection implements PersonDAO {
     }
     @Override
     public Collection<Person> findByName(String name) {
-        List<Person> persons = new ArrayList<>();
+        Person person = null;
         try(
                 Connection connection = MySQLConnection.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM person WHERE first_name=?");
@@ -110,31 +109,34 @@ public class PersonDAOCollection implements PersonDAO {
                     String lastName = resultSet.getString("last_name");
 
                     person = new Person(personId,firstName,lastName);
-                    persons.add(person);
+                    person1.add(person);
                 }
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return persons;
+        return person1;
     }
     @Override
     public Person update(Person person) {
-        try(
+       try(
                 Connection connection = MySQLConnection.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE person SET first_name=?,last_name=? WHERE person_id=?");
         ){
-            preparedStatement.setInt(1, person.getId());
-            preparedStatement.setString(2, person.getFirstName());
-            preparedStatement.setString(3, person.getLastName());
+
+            preparedStatement.setString(1, person.getFirstName());
+            preparedStatement.setString(2, person.getLastName());
+            preparedStatement.setInt(3, person.getId());
+
+            System.out.println("Updated:"+person.getId());
 
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("Person with ID " + person.getPersonId() + " updated successfully.");
+                System.out.println("Person with ID " + person.getId() + " updated successfully.");
                 return person;
             } else {
-                System.out.println("No person found with ID " + person.getPersonId() + " to update.");
+                System.out.println("No person found with ID " + person.getId() + " to update.");
                 return null;
             }
         } catch (SQLException e) {

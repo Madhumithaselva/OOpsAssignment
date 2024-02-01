@@ -13,18 +13,52 @@ private String taskDescription;
 private LocalDate deadline;
 private boolean done;
 private Person creator;
+private int assigneeId;
 
-public ToDoItem(int id,String title,String taskDescription,LocalDate deadline,Person creator){
+    public ToDoItem(int id, java.lang.String title, java.lang.String taskDescription, LocalDate deadline, boolean done, Person creator) {
+        this.id = id;
+        this.title = title;
+        this.taskDescription = taskDescription;
+        this.deadline = deadline;
+        this.done = done;
+        this.creator = creator;
+    }
+
+    public ToDoItem(int id, String title, String taskDescription, LocalDate deadline, Person creator){
     this.id= TodoItemIdSequencer.getCurrentId();
     setTitle(title);
     setTaskDescription(taskDescription);
     setDeadLine(deadline);
     this.creator=creator;
+    //assigneeId=creator.getId();
 }
+
+    public ToDoItem(int id, String title, String taskDescription, LocalDate deadline, boolean done) {
+        this.id = id;
+        this.title = title;
+        this.taskDescription = taskDescription;
+        this.deadline = deadline;
+        this.done = done;
+        //this.assigneeId=assigneeId;
+    }
 
     public int getId() {
         return id;
     }
+
+    public void setId(int id){
+        this.id=TodoItemIdSequencer.getCurrentId();
+    }
+
+
+    public int getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(int assigneeId) {
+        this.assigneeId = creator.getId();
+    }
+
 
     public String getTitle() {
         return title;
